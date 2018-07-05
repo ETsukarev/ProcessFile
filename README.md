@@ -8,3 +8,8 @@ Start application:
 
 Example:
 ProcessFile d:\Temp\file.txt 10000
+or
+ProcessFile "d:\Temp\file with data.txt" 10000
+
+
+File with results named 'SignatureBlocks.txt' will be in the directory of ProcessFile.exe
