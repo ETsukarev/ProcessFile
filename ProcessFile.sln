@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignatureLib", "SignatureLib\SignatureLib.csproj", "{CAB8514E-E179-4E14-8FB7-968674D6E93C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessFile", "ConsoleCalcSignature\ProcessFile.csproj", "{5F6366C4-3C24-4A9A-866E-12EEE2B920EF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CAB8514E-E179-4E14-8FB7-968674D6E93C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAB8514E-E179-4E14-8FB7-968674D6E93C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAB8514E-E179-4E14-8FB7-968674D6E93C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAB8514E-E179-4E14-8FB7-968674D6E93C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F6366C4-3C24-4A9A-866E-12EEE2B920EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F6366C4-3C24-4A9A-866E-12EEE2B920EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F6366C4-3C24-4A9A-866E-12EEE2B920EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F6366C4-3C24-4A9A-866E-12EEE2B920EF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1BEF6925-17D9-458E-B527-AE1B904DA8D4}
+	EndGlobalSection
+EndGlobal
