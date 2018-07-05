@@ -1,5 +1,5 @@
 # ProcessFile
-An application in C # to generate SHA256 hash function for each block of the file.
+An C# application for generating SHA256 hash function for each block of the file.
 
 Start application:
 
