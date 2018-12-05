@@ -12,6 +12,9 @@ namespace SignatureLib.Interfaces
         /// </summary>
         Action ActionToRun { get; }
 
+        /// <summary>
+        /// Call delegate on completed task
+        /// </summary>
         Action<ITask> ActionCompleted { get; set; }
 
         /// <summary>

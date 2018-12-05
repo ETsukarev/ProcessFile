@@ -31,7 +31,7 @@ namespace SignatureLibAsync
             _taskQueue = new TaskQueueAsync();
         }
 
-        public async void Run()
+        public async Task Run()
         {
             Task taskResult = null;
             try
@@ -75,6 +75,11 @@ namespace SignatureLibAsync
 
         public void Dispose()
         {
+        }
+
+        void ISignWorker.Run()
+        {
+            throw new NotImplementedException();
         }
     }
 }

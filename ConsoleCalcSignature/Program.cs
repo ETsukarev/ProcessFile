@@ -17,7 +17,7 @@ namespace ConsoleCalcSignature
         /// Entry point to app
         /// </summary>
         /// <param name="args">inputFile, sizeOfBlock</param>
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             try
             {
@@ -33,7 +33,7 @@ namespace ConsoleCalcSignature
                 using (var signer = new Signer())
                 {
                     signer.Init(args[0], args[1]);
-                    signer.RunSign();
+                    await signer.RunSign();
 
                     //do
                     //{
@@ -101,10 +101,10 @@ namespace ConsoleCalcSignature
         /// <summary>
         /// Start processing
         /// </summary>
-        internal void RunSign()
+        internal async Task RunSign()
         {
             //SignatureWorker.Run();
-            Task.Run(() => signWorkerAsync.Run());
+            await signWorkerAsync.Run();
         }
 
         /// <summary>

@@ -37,9 +37,10 @@ namespace SignatureLibAsync
         /// </summary>
         /// <param name="task">Task for processing</param>
         /// <returns></returns>
-        public void AddTask(ITask task)
+        public Task AddTask(ITask task)
         {
-            Task.Run(() => _tasks.Enqueue(task));
+            var result = Task.Run(() => _tasks.Enqueue(task));
+            return result;
         }
 
         /// <summary>
