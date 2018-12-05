@@ -12,6 +12,8 @@ namespace SignatureLib.Interfaces
         /// </summary>
         Action ActionToRun { get; }
 
+        Action<ITask> ActionCompleted { get; set; }
+
         /// <summary>
         /// Result of processed task
         /// if Result is ITask, it's means insert result to TaskQueue

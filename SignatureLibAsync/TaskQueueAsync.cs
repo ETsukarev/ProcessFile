@@ -3,7 +3,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using SignatureLib.Interfaces;
 
@@ -22,9 +21,7 @@ namespace SignatureLibAsync
 
         private readonly Stopwatch _stopWatch;
 
-        private readonly ManualResetEvent manualResetEventStopQueue;
-
-        public Exception Error { get; }
+        public Exception Error { get; private set; }
 
         /// <summary>
         /// Сonstructor
@@ -33,7 +30,6 @@ namespace SignatureLibAsync
         {
             _runTaskQueue = true;
             _stopWatch = Stopwatch.StartNew();
-            manualResetEventStopQueue = new ManualResetEvent(false);
         }
 
         /// <summary>
@@ -59,8 +55,8 @@ namespace SignatureLibAsync
         /// <returns></returns>
         private async Task RunTask(ITask task)
         {
+            task.ActionCompleted = IncrementStatistics;
             await Task.Run(task.ActionToRun);
-            IncrementStatistics(task);
 
             if (task.Result is ITask taskResult)
                 AddTask(taskResult);
@@ -94,23 +90,31 @@ namespace SignatureLibAsync
         /// </summary>
         public async Task GeneralLoop()
         {
-            while (_runTaskQueue || _tasks.Count > 0)
+            try
             {
-                var newTask = await GetTask();
-                if (newTask != null)
-                    await RunTask(newTask);
+                while (_runTaskQueue || _tasks.Count > 0)
+                {
+                    var newTask = await GetTask();
+                    if (newTask != null)
+                        await RunTask(newTask);
+                }
             }
-            _stopWatch.Stop();
-            manualResetEventStopQueue.Set();
+            catch (Exception ex)
+            {
+                Error = ex;
+            }
+            finally
+            {
+                _stopWatch.Stop();
+            }
         }
 
         /// <summary>
         /// Stop general loop
         /// </summary>
-        public async Task StopLoop()
+        public void StopLoop()
         {
             _runTaskQueue = false;
-            await Task.Run(() => { manualResetEventStopQueue.WaitOne(); });
         }
     }
 }

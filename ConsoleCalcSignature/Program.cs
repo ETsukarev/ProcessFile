@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using SignatureLib;
 using SignatureLib.Interfaces;
 using SignatureLibAsync;
@@ -34,9 +35,10 @@ namespace ConsoleCalcSignature
                     signer.Init(args[0], args[1]);
                     signer.RunSign();
 
-                    do
-                    {
-                    } while (!signer.WaitComplete(TimeSpan.FromSeconds(1)));
+                    //do
+                    //{
+                    //} while (!signer.WaitComplete(TimeSpan.FromSeconds(1)));
+                    signer.WaitComplete(int.MaxValue);
 
                     if (signer.Error != null)
                         Console.WriteLine(signer.Error.ToString());
@@ -102,7 +104,7 @@ namespace ConsoleCalcSignature
         internal void RunSign()
         {
             //SignatureWorker.Run();
-            signWorkerAsync.Run();
+            Task.Run(() => signWorkerAsync.Run());
         }
 
         /// <summary>
@@ -130,7 +132,7 @@ namespace ConsoleCalcSignature
         /// </summary>
         /// <param name="timeToWait">Time wait to complete</param>
         /// <returns>true - processing is completed; false - doesn't completed</returns>
-        internal bool WaitComplete(TimeSpan timeToWait)
+        internal bool WaitComplete(int timeToWait)
         {
             return _eventStop.WaitOne(timeToWait);
         }

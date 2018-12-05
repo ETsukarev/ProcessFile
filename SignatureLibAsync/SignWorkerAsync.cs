@@ -12,21 +12,14 @@ namespace SignatureLibAsync
     public class SignWorkerAsync : ISignWorker, IDisposable
     {
         private int _sizeBlock;
-        private string _fileName;
         private const int DefaultSizeBlock = 10000;
 
         private ISource _fileSource;
 
         private TaskQueueAsync _taskQueue;
 
-        public SignWorkerAsync()
-        {
-        }
-
         public void Init(string inputFile, string sizeBlock, string fileResult = "SignatureBlocks.txt")
         {
-            _fileName = inputFile;
-
             _sizeBlock = int.TryParse(sizeBlock, out var result) ? result : DefaultSizeBlock;
 
             _fileSource = new FileSource();
@@ -51,18 +44,18 @@ namespace SignatureLibAsync
                 while (!_fileSource.IsReadComplete())
                     _taskQueue.AddTask(TaskCalcHashSha256.GetInstance());
 
-                await _taskQueue.StopLoop();
+                _taskQueue.StopLoop();
             }
             catch (Exception ex)
             {
-                await _taskQueue.StopLoop();
+                _taskQueue.StopLoop();
                 Error = ex;
             }
             finally
             {
+                taskResult?.Wait();
                 _taskQueue.GetStatistics(out TimeSpan time, out Dictionary<string, long> stat);
                 OnSendCompleted(new SignWorkerAsyncCompletedArgs(time, stat, Error, _taskQueue.Error));
-                taskResult?.Wait();
             }
         }
 
@@ -82,8 +75,6 @@ namespace SignatureLibAsync
 
         public void Dispose()
         {
-            //_taskQueue.StopLoop();
         }
-
     }
 }

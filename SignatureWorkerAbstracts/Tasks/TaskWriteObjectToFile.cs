@@ -78,6 +78,8 @@ namespace SignatureLib
                     using (var sw = System.IO.File.AppendText(_fileName))
                         sw.WriteLine(Encoding.UTF8.GetString(block));
 
+                ActionCompleted?.Invoke(this);
+
             };
             ActionToRun = calcHashFunc;
         }
@@ -90,6 +92,8 @@ namespace SignatureLib
             get => _actionToRun;
             set => _actionToRun = value;
         }
+
+        public Action<ITask> ActionCompleted { get; set; }
 
         /// <summary>
         /// Result of processed task
