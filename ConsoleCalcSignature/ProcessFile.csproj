@@ -8,8 +8,9 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>ProcessFile</RootNamespace>
     <AssemblyName>ProcessFile</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -20,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -29,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>ConsoleCalcSignature.Program</StartupObject>
@@ -46,10 +49,21 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SignatureLibAsync\SignatureLibAsync.csproj">
+      <Project>{927d1c30-948b-4b70-b630-9d1dc3f60cbc}</Project>
+      <Name>SignatureLibAsync</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SignatureLib\SignatureLib.csproj">
       <Project>{cab8514e-e179-4e14-8fb7-968674d6e93c}</Project>
       <Name>SignatureLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SignatureWorkerAbstracts\SignatureWorkerAbstracts.csproj">
+      <Project>{CCB795CE-86A1-413E-ACCB-F7E1EB2AC12E}</Project>
+      <Name>SignatureWorkerAbstracts</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

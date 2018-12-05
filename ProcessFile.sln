@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignatureLib", "SignatureLi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessFile", "ConsoleCalcSignature\ProcessFile.csproj", "{5F6366C4-3C24-4A9A-866E-12EEE2B920EF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignatureLibAsync", "SignatureLibAsync\SignatureLibAsync.csproj", "{927D1C30-948B-4B70-B630-9D1DC3F60CBC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignatureWorkerAbstracts", "SignatureWorkerAbstracts\SignatureWorkerAbstracts.csproj", "{CCB795CE-86A1-413E-ACCB-F7E1EB2AC12E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{5F6366C4-3C24-4A9A-866E-12EEE2B920EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F6366C4-3C24-4A9A-866E-12EEE2B920EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F6366C4-3C24-4A9A-866E-12EEE2B920EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{927D1C30-948B-4B70-B630-9D1DC3F60CBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{927D1C30-948B-4B70-B630-9D1DC3F60CBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{927D1C30-948B-4B70-B630-9D1DC3F60CBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{927D1C30-948B-4B70-B630-9D1DC3F60CBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCB795CE-86A1-413E-ACCB-F7E1EB2AC12E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCB795CE-86A1-413E-ACCB-F7E1EB2AC12E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCB795CE-86A1-413E-ACCB-F7E1EB2AC12E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCB795CE-86A1-413E-ACCB-F7E1EB2AC12E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,7 +6,7 @@ namespace SignatureLib.Interfaces
     /// <summary>
     /// Interface for adding tasks, processing them, getting status processing
     /// </summary>
-    internal interface ITaskQueue
+    public interface ITaskQueue
     {
         /// <summary>
         /// Initialization of TaskQueue

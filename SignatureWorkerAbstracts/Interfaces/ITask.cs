@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace SignatureLib
+namespace SignatureLib.Interfaces
 {
     /// <summary>
     /// Interface of processing task
     /// </summary>
-    internal interface ITask
+    public interface ITask
     {
         /// <summary>
         /// Action to run

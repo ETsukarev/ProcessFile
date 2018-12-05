@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CAB8514E-E179-4E14-8FB7-968674D6E93C}</ProjectGuid>
+    <ProjectGuid>{CCB795CE-86A1-413E-ACCB-F7E1EB2AC12E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SignatureLib</RootNamespace>
-    <AssemblyName>SignatureLib</AssemblyName>
+    <RootNamespace>SignatureWorkerCommonTypes</RootNamespace>
+    <AssemblyName>SignatureWorkerCommonTypes</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,17 +39,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\ISignWorker.cs" />
+    <Compile Include="SignWorkerCompletedAbstractArgs.cs" />
+    <Compile Include="Interfaces\ISource.cs" />
+    <Compile Include="Interfaces\ITask.cs" />
+    <Compile Include="Interfaces\ITaskQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SignWorker.cs" />
-    <Compile Include="SignWorkerCompletedArgs.cs" />
-    <Compile Include="TaskQueue.cs" />
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <ProjectReference Include="..\SignatureWorkerAbstracts\SignatureWorkerAbstracts.csproj">
-      <Project>{ccb795ce-86a1-413e-accb-f7e1eb2ac12e}</Project>
-      <Name>SignatureWorkerAbstracts</Name>
-    </ProjectReference>
+    <Compile Include="Sources\FIleSource.cs" />
+    <Compile Include="Sources\StringSource.cs" />
+    <Compile Include="Tasks\TaskCalcHashSha256.cs" />
+    <Compile Include="Tasks\TaskWriteObjectToFile.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

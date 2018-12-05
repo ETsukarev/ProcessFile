@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SignatureWorkerAbstracts;
+using System;
 using System.Collections.Generic;
 
 namespace SignatureLib
@@ -6,7 +7,7 @@ namespace SignatureLib
     /// <summary>
     /// Argument class for passing final statistics
     /// </summary>
-    public class SignWorkerCompletedArgs : EventArgs
+    public class SignWorkerCompletedArgs : SignWorkerCompletedAbstractArgs
     {
         /// <summary>
         /// Constructor
@@ -19,28 +20,26 @@ namespace SignatureLib
         {
             ErrorTaskQueue = errorTaskQueue;
             ErrorSignWorker = errorSignWorker;
-            CountBlocks = stat;
+            _stat = stat;
             TimeProcessing = timeProcessing;
         }
 
         /// <summary>
         /// Statistic of processed blocks
         /// </summary>
-        public Dictionary<string, long> CountBlocks { get; }
+        private Dictionary<string, long> _stat { get; }
 
         /// <summary>
-        /// Overall time processing
+        /// Count blocks in source file
         /// </summary>
-        public TimeSpan TimeProcessing { get; }
-
-        /// <summary>
-        /// Error of SignWorker, null if no error
-        /// </summary>
-        public Exception ErrorSignWorker { get; }
-
-        /// <summary>
-        /// Error of TaskQueue, null if no error
-        /// </summary>
-        public Exception ErrorTaskQueue { get; }
+        public override long CountBlocks
+        {
+            get
+            {
+                if (_stat.ContainsKey(nameof(TaskCalcHashSha256)))
+                    return _stat[nameof(TaskCalcHashSha256)];
+                return 0;
+            }
+        }
     }
 }

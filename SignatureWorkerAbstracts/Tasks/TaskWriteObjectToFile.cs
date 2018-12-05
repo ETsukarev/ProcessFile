@@ -1,13 +1,15 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Text;
+using SignatureLib.Interfaces;
 
 namespace SignatureLib
 {
     /// <summary>
     /// Task for write result to file
     /// </summary>
-    class TaskWriteObjectToFile : ITask
+    public class TaskWriteObjectToFile : ITask
     {
         /// <summary>
         /// Instance for synchronization writing to file
@@ -73,7 +75,7 @@ namespace SignatureLib
                 byte[] block = buffer;
 
                 lock (Instance)
-                    using (var sw = File.AppendText(_fileName))
+                    using (var sw = System.IO.File.AppendText(_fileName))
                         sw.WriteLine(Encoding.UTF8.GetString(block));
 
             };

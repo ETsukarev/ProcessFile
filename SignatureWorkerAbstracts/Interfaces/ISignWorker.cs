@@ -1,6 +1,7 @@
 ﻿using System;
+using SignatureWorkerAbstracts;
 
-namespace SignatureLib
+namespace SignatureLib.Interfaces
 {
     /// <summary>
     /// Interface to process input file
@@ -8,7 +9,7 @@ namespace SignatureLib
     public interface ISignWorker
     {
         /// <summary>
-        /// Inialization of Worker
+        /// Initialization of Worker
         /// </summary>
         /// <param name="inputFile">Input file to process</param>
         /// <param name="sizeBlock">Size of block to process</param>
@@ -23,7 +24,7 @@ namespace SignatureLib
         /// <summary>
         /// Event of complete processing file
         /// </summary>
-        event EventHandler<SignWorkerCompletedArgs> FileProcessCompleted;
+        event EventHandler<SignWorkerCompletedAbstractArgs> FileProcessCompleted;
 
         /// <summary>
         /// Get error if occurred, else null

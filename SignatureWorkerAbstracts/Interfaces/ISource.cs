@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace SignatureLib
+namespace SignatureLib.Interfaces
 {
     /// <summary>
     /// Interface of data source
     /// </summary>
-    interface ISource : IDisposable
+    public interface ISource : IDisposable
     {
         /// <summary>
         /// Initialization of data source

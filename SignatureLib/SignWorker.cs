@@ -4,6 +4,8 @@ using System.IO;
 using System.Threading;
 using SignatureLib.Interfaces;
 using SignatureLib.Sources;
+using SignatureWorkerAbstracts;
+
 
 namespace SignatureLib
 {
@@ -101,15 +103,15 @@ namespace SignatureLib
         /// <summary>
         /// Event of complete processing file
         /// </summary>
-        public event EventHandler<SignWorkerCompletedArgs> FileProcessCompleted;
+        public event EventHandler<SignWorkerCompletedAbstractArgs> FileProcessCompleted;
 
         /// <summary>
         /// Fire event handler for FileProcessCompleted
         /// </summary>
         /// <param name="args">arguments</param>
-        private void OnSendCompleted(SignWorkerCompletedArgs args)
+        private void OnSendCompleted(SignWorkerCompletedAbstractArgs args)
         {
-            EventHandler<SignWorkerCompletedArgs> handler = FileProcessCompleted;
+            EventHandler<SignWorkerCompletedAbstractArgs> handler = FileProcessCompleted;
             handler?.Invoke(this, args);
         }
 

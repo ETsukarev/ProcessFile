@@ -1,12 +1,14 @@
 ﻿using System;
 using System.IO;
+using System.Net;
+using SignatureLib.Interfaces;
 
 namespace SignatureLib
 {
     /// <summary>
     /// Source is file
     /// </summary>
-    class FileSource : ISource
+    public class FileSource : ISource
     {
         /// <summary>
         /// Stream associated with file
@@ -26,7 +28,7 @@ namespace SignatureLib
         /// <summary>
         /// Flag end of file
         /// </summary>
-        private bool _isReadComplete;
+        private volatile bool _isReadComplete;
 
         /// <summary>
         /// Number of read data block
@@ -52,7 +54,7 @@ namespace SignatureLib
         {
             if (portionData < 1)
                 throw new ArgumentException("Size of block can't less than 1");
-            if (! File.Exists(source))
+            if (!File.Exists(source))
                 throw new ArgumentException($"File {source} not exist !");
 
             _portionData = portionData;

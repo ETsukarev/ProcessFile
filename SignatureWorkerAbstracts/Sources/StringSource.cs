@@ -1,11 +1,12 @@
 ﻿using System.Text;
+using SignatureLib.Interfaces;
 
 namespace SignatureLib.Sources
 {
     /// <summary>
     /// Source is string
     /// </summary>
-    class StringSource : ISource
+    public class StringSource : ISource
     {
         /// <summary>
         /// Content string

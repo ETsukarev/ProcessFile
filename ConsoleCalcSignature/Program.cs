@@ -1,7 +1,9 @@
 ﻿using System;
-using System.Linq;
 using System.Threading;
 using SignatureLib;
+using SignatureLib.Interfaces;
+using SignatureLibAsync;
+using SignatureWorkerAbstracts;
 
 namespace ConsoleCalcSignature
 {
@@ -67,12 +69,18 @@ namespace ConsoleCalcSignature
         /// </summary>
         private readonly ManualResetEvent _eventStop = new ManualResetEvent(false);
 
+        ///// <summary>
+        ///// Обработчик сигнатур построенный на async/await
+        ///// </summary>
+        private SignWorkerAsync signWorkerAsync;// = new SignWorkerAsync();
+
         /// <summary>
         /// Constructor
         /// </summary>
         internal Signer()
         {
-            SignatureWorker = new SignWorker();
+            //SignatureWorker = new SignWorker();
+            signWorkerAsync = new SignWorkerAsync();
         }
 
         /// <summary>
@@ -82,8 +90,10 @@ namespace ConsoleCalcSignature
         /// <param name="blockSize">Size of block to process</param>
         internal void Init(string inputFile, string blockSize)
         {
-            SignatureWorker.Init(inputFile, blockSize);
-            SignatureWorker.FileProcessCompleted += CompletedProcessed;
+            //SignatureWorker.Init(inputFile, blockSize);
+            //SignatureWorker.FileProcessCompleted += CompletedProcessed;
+            signWorkerAsync.Init(inputFile, blockSize);
+            signWorkerAsync.FileProcessCompleted += CompletedProcessed;
         }
 
         /// <summary>
@@ -91,7 +101,8 @@ namespace ConsoleCalcSignature
         /// </summary>
         internal void RunSign()
         {
-            SignatureWorker.Run();
+            //SignatureWorker.Run();
+            signWorkerAsync.Run();
         }
 
         /// <summary>
@@ -99,10 +110,10 @@ namespace ConsoleCalcSignature
         /// </summary>
         /// <param name="sender">Event sender</param>
         /// <param name="args">Statistic of processing tasks</param>
-        private void CompletedProcessed(object sender, SignWorkerCompletedArgs args)
+        private void CompletedProcessed(object sender, SignWorkerCompletedAbstractArgs args)
         {
             Console.WriteLine($"Overall time to calc SHA256: {args.TimeProcessing}");
-            Console.WriteLine($"Overall blocks calculated: {args.CountBlocks.Values.Sum()}");
+            Console.WriteLine($"Overall blocks calculated: {args.CountBlocks}");
             Console.WriteLine("Input file successfully processed !");
 
             if (args.ErrorSignWorker != null)

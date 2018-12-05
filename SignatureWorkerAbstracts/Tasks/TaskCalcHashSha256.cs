@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography;
 using System.Threading;
+using SignatureLib.Interfaces;
 using SignatureLib.Sources;
 
 namespace SignatureLib
@@ -8,7 +9,7 @@ namespace SignatureLib
     /// <summary>
     /// Task for calculate SHA256 on block of file
     /// </summary>
-    class TaskCalcHashSha256 : ITask
+    public class TaskCalcHashSha256 : ITask
     {
         /// <summary>
         /// Instance for synchronization read data from file
