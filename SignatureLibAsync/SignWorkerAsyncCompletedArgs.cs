@@ -10,7 +10,7 @@ namespace SignatureLibAsync
 {
     public class SignWorkerAsyncCompletedArgs : SignWorkerCompletedAbstractArgs
     {
-        public SignWorkerAsyncCompletedArgs(TimeSpan timeProcessing, Dictionary<string, long> stat, Exception errorSignWorker, Exception errorTaskQueue)
+        public SignWorkerAsyncCompletedArgs(TimeSpan timeProcessing, Dictionary<string, int> stat, Exception errorSignWorker, Exception errorTaskQueue)
         {
             ErrorTaskQueue = errorTaskQueue;
             ErrorSignWorker = errorSignWorker;
@@ -18,7 +18,7 @@ namespace SignatureLibAsync
             TimeProcessing = timeProcessing;
         }
 
-        private Dictionary<string, long> _stat { get; }
+        private Dictionary<string, int> _stat { get; }
 
         public override long CountBlocks
         {

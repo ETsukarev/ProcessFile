@@ -38,11 +38,11 @@ namespace SignatureLibAsync
             {
                 taskResult = Task.Run(() =>_taskQueue.GeneralLoop());
 
-                await Task.Run(() =>_taskQueue.AddTask(TaskWriteObjectToFile.GetInstance(StringSource.GetInstance($"Calc SHA256 for each block of file: {_fileSource.Name}"))));
-                await Task.Run(() =>_taskQueue.AddTask(TaskWriteObjectToFile.GetInstance(StringSource.GetInstance(string.Empty))));
+                await Task.Run(() =>_taskQueue.AddTaskAsync(TaskWriteObjectToFile.GetInstance(StringSource.GetInstance($"Calc SHA256 for each block of file: {_fileSource.Name}"))));
+                await Task.Run(() =>_taskQueue.AddTaskAsync(TaskWriteObjectToFile.GetInstance(StringSource.GetInstance(string.Empty))));
 
                 while (!_fileSource.IsReadComplete())
-                    _taskQueue.AddTask(TaskCalcHashSha256.GetInstance());
+                    await _taskQueue.AddTaskAsync(TaskCalcHashSha256.GetInstance());
             }
             catch (Exception ex)
             {
@@ -51,8 +51,15 @@ namespace SignatureLibAsync
             finally
             {
                 _taskQueue.StopLoop();
-                taskResult?.Wait();
-                _taskQueue.GetStatistics(out TimeSpan time, out Dictionary<string, long> stat);
+                try
+                {
+                    taskResult?.Wait();
+                }
+                catch (Exception ex)
+                {
+                    Error = ex;
+                }
+                _taskQueue.GetStatistics(out TimeSpan time, out Dictionary<string, int> stat);
                 OnSendCompleted(new SignWorkerAsyncCompletedArgs(time, stat, Error, _taskQueue.Error));
             }
         }

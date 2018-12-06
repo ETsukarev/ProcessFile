@@ -72,9 +72,8 @@ namespace SignatureLib
 
                     string res = $"{blockNum} ->{block.Length} ->{Thread.CurrentThread.ManagedThreadId} ->{hash}";
 
-                    ActionCompleted?.Invoke(this);
-
                     Result = TaskWriteObjectToFile.GetInstance(StringSource.GetInstance(res));
+                    ActionCompleted?.Invoke(this);
                 }
             };
             ActionToRun = calcHashFunc;

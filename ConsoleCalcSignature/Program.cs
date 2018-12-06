@@ -40,8 +40,6 @@ namespace ConsoleCalcSignature
                     //} while (!signer.WaitComplete(TimeSpan.FromSeconds(1)));
                     signer.WaitComplete(int.MaxValue);
 
-                    if (signer.Error != null)
-                        Console.WriteLine(signer.Error.ToString());
                 }
             }
             catch (Exception ex)
@@ -60,11 +58,6 @@ namespace ConsoleCalcSignature
         /// Instance of Signworker
         /// </summary>
         private ISignWorker SignatureWorker { get; }
-
-        /// <summary>
-        /// Exception of processing tasks if occurred
-        /// </summary>
-        internal Exception Error { get; private set; }
 
         /// <summary>
         /// Event signal to stop processing
@@ -116,13 +109,14 @@ namespace ConsoleCalcSignature
         {
             Console.WriteLine($"Overall time to calc SHA256: {args.TimeProcessing}");
             Console.WriteLine($"Overall blocks calculated: {args.CountBlocks}");
-            Console.WriteLine("Input file successfully processed !");
-
-            if (args.ErrorSignWorker != null)
-                Error = args.ErrorSignWorker;
-
-            if (args.ErrorTaskQueue != null)
-                Error = args.ErrorTaskQueue;
+            if (args.ErrorSignWorker == null && args.ErrorTaskQueue == null)
+                Console.WriteLine("Input file successfully processed !");
+            else
+            {
+                Console.WriteLine("Error processing input file:");
+                Console.WriteLine(args.ErrorSignWorker != null ? args.ErrorSignWorker.ToString() : string.Empty);
+                Console.WriteLine(args.ErrorTaskQueue != null ? args.ErrorTaskQueue.ToString() : string.Empty);
+            }
 
             _eventStop.Set();
         }
