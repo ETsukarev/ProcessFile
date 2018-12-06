@@ -14,6 +14,8 @@ namespace SignatureLibAsync
     /// </summary>
     public class TaskQueueAsync
     {
+        #region Private_fields
+
         private readonly ConcurrentQueue<ITask> _tasks = new ConcurrentQueue<ITask>();
 
         private readonly ConcurrentDictionary<string, int> _statistic = new ConcurrentDictionary<string, int>();
@@ -22,11 +24,19 @@ namespace SignatureLibAsync
 
         private readonly Stopwatch _stopWatch;
 
-        public Exception Error { get; private set; }
-
         private volatile int _countTasks;
 
         private volatile int _countTasksRunning;
+
+        #endregion
+
+        #region Properties
+
+        public Exception Error { get; private set; }
+
+        #endregion
+
+        #region Public_methods
 
         /// <summary>
         /// Сonstructor
@@ -38,71 +48,31 @@ namespace SignatureLibAsync
         }
 
         /// <summary>
-        /// Add task for processing
+        /// Add task for processing async
         /// </summary>
         /// <param name="task">Task for processing</param>
-        /// <returns></returns>
+        /// <returns>Task</returns>
         public Task AddTaskAsync(ITask task)
         {
-            var result = Task.Run(() => AddTask(task));
+            var result = Task.Run(() => AddTaskInner(task));
             return result;
         }
 
-        private void AddTask(ITask task)
-        {
-            Interlocked.Increment(ref _countTasks);
-            _tasks.Enqueue(task);
-        }
-
         /// <summary>
-        /// Get task from queue
-        /// </summary>
-        /// <returns></returns>
-        private async Task<ITask> GetTask() => await Task.Run(() => _tasks.TryDequeue(out var resTask) ? resTask : null);
-
-        /// <summary>
-        /// Run task
+        /// Add task for processing sync
         /// </summary>
         /// <param name="task">Task for processing</param>
         /// <returns></returns>
-        private void RunTask(ITask task)
+        public void AddTask(ITask task)
         {
-            Interlocked.Increment(ref _countTasksRunning);
-            Task.Run(() => {
-                task.ActionCompleted = IncrementStatistics;
-                task.ActionToRun.Invoke();
-
-               if (task.Result is ITask taskResult)
-                   AddTask(taskResult);
-           });
-        }
-
-        /// <summary>
-        /// Increment statistic for concrete task type
-        /// </summary>
-        /// <param name="task"></param>
-        private void IncrementStatistics(ITask task)
-        {
-            if (!_statistic.ContainsKey(task.GetType().Name))
-            {
-                lock (_statistic)
-                    if (!_statistic.ContainsKey(task.GetType().Name))
-                        _statistic.TryAdd(task.GetType().Name, 1);
-                    else
-                        _statistic[task.GetType().Name]++;
-            }
-            else
-               lock (_statistic)
-                  _statistic[task.GetType().Name]++;
-
-            Interlocked.Decrement(ref _countTasksRunning);
+            AddTaskInner(task);
         }
 
         /// <summary>
         /// Get of statistic execute task
         /// </summary>
         /// <param name="time">Time for processing all tasks</param>
-        /// <param name="statistic">Statistic of executing: key - Name of task type; value - count tasks executed</param>
+        /// <param name="statistic">Count of executed tasks: key - Name of task type; value - count tasks executed</param>
         public void GetStatistics(out TimeSpan time, out Dictionary<string, int> statistic)
         {
             time = _stopWatch?.Elapsed ?? TimeSpan.Zero;
@@ -140,5 +110,66 @@ namespace SignatureLibAsync
         {
             _runTaskQueue = false;
         }
+
+        #endregion
+
+        #region Private_methods
+
+        /// <summary>
+        /// Add task for processing (called by public methods)
+        /// </summary>
+        /// <param name="task">Task for processing</param>
+        /// <returns></returns>
+        private void AddTaskInner(ITask task)
+        {
+            Interlocked.Increment(ref _countTasks);
+            _tasks.Enqueue(task);
+        }
+
+        /// <summary>
+        /// Get task from queue
+        /// </summary>
+        /// <returns></returns>
+        private async Task<ITask> GetTask() => await Task.Run(() => _tasks.TryDequeue(out var resTask) ? resTask : null);
+
+        /// <summary>
+        /// Run task
+        /// </summary>
+        /// <param name="task">Task for processing</param>
+        /// <returns></returns>
+        private void RunTask(ITask task)
+        {
+            Interlocked.Increment(ref _countTasksRunning);
+            Task.Run(() => {
+                task.ActionCompleted = IncrementStatistics;
+                task.ActionToRun.Invoke();
+
+                if (task.Result is ITask taskResult)
+                    AddTask(taskResult);
+            });
+        }
+
+        /// <summary>
+        /// Increment statistic for concrete task type
+        /// </summary>
+        /// <param name="task"></param>
+        private void IncrementStatistics(ITask task)
+        {
+            if (!_statistic.ContainsKey(task.GetType().Name))
+            {
+                lock (_statistic)
+                    if (!_statistic.ContainsKey(task.GetType().Name))
+                        _statistic.TryAdd(task.GetType().Name, 1);
+                    else
+                        _statistic[task.GetType().Name]++;
+            }
+            else
+                lock (_statistic)
+                    _statistic[task.GetType().Name]++;
+
+            Interlocked.Decrement(ref _countTasksRunning);
+        }
+
+        #endregion
     }
 }
