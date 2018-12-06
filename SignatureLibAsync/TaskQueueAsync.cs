@@ -56,11 +56,13 @@ namespace SignatureLibAsync
         /// <returns></returns>
         private async Task RunTask(ITask task)
         {
-            task.ActionCompleted = IncrementStatistics;
-            await Task.Run(task.ActionToRun);
+           await Task.Run(() => {
+                task.ActionCompleted = IncrementStatistics;
+                task.ActionToRun.Invoke();
 
-            if (task.Result is ITask taskResult)
-                AddTask(taskResult);
+                if (task.Result is ITask taskResult)
+                    AddTask(taskResult);
+            });
         }
 
         /// <summary>

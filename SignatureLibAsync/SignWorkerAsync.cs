@@ -43,16 +43,14 @@ namespace SignatureLibAsync
 
                 while (!_fileSource.IsReadComplete())
                     _taskQueue.AddTask(TaskCalcHashSha256.GetInstance());
-
-                _taskQueue.StopLoop();
             }
             catch (Exception ex)
             {
-                _taskQueue.StopLoop();
                 Error = ex;
             }
             finally
             {
+                _taskQueue.StopLoop();
                 taskResult?.Wait();
                 _taskQueue.GetStatistics(out TimeSpan time, out Dictionary<string, long> stat);
                 OnSendCompleted(new SignWorkerAsyncCompletedArgs(time, stat, Error, _taskQueue.Error));
@@ -75,6 +73,7 @@ namespace SignatureLibAsync
 
         public void Dispose()
         {
+            ((IDisposable)TaskCalcHashSha256.Source).Dispose();
         }
 
         void ISignWorker.Run()

@@ -144,6 +144,9 @@ namespace ConsoleCalcSignature
         {
             if (SignatureWorker is IDisposable)
                 ((IDisposable)SignatureWorker).Dispose();
+
+            if (signWorkerAsync is IDisposable)
+                ((IDisposable)signWorkerAsync).Dispose();
         }
     }
 }
