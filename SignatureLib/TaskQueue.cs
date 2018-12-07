@@ -70,7 +70,7 @@ namespace SignatureLib
         private Stopwatch _stopwatch;
 
         /// <summary>
-        /// Dic to store: string - name type of task, long - number times execute
+        /// To store: string - name type of task, long - count executed tasks
         /// </summary>
         private Dictionary<string, long> _statistic = new Dictionary<string, long>();
 

@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -48,9 +49,9 @@
     <Compile Include="TaskQueueAsync.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SignatureWorkerAbstracts\SignatureWorkerAbstracts.csproj">
+    <ProjectReference Include="..\SignatureWorkerAbstracts\SignatureWorkerCommonTypes.csproj">
       <Project>{ccb795ce-86a1-413e-accb-f7e1eb2ac12e}</Project>
-      <Name>SignatureWorkerAbstracts</Name>
+      <Name>SignatureWorkerCommonTypes</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

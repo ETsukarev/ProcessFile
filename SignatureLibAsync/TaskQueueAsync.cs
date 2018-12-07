@@ -16,16 +16,19 @@ namespace SignatureLibAsync
     {
         #region Private_fields
 
+        /// Queue of tasks
         private readonly ConcurrentQueue<ITask> _tasks = new ConcurrentQueue<ITask>();
 
+        /// Dic of statistics: Key: type_name of tasks; Value: count_tasks_processed
         private readonly ConcurrentDictionary<string, int> _statistic = new ConcurrentDictionary<string, int>();
 
-        private volatile bool _runTaskQueue;
-
+        /// Calc overall time processed tasks
         private readonly Stopwatch _stopWatch;
 
-        private volatile int _countTasks;
+        /// Flag process tasks or not
+        private volatile bool _flagRunTasks;
 
+        /// Count run tasks at any time
         private volatile int _countTasksRunning;
 
         #endregion
@@ -43,7 +46,7 @@ namespace SignatureLibAsync
         /// </summary>
         public TaskQueueAsync()
         {
-            _runTaskQueue = true;
+            _flagRunTasks = true;
             _stopWatch = Stopwatch.StartNew();
         }
 
@@ -52,10 +55,9 @@ namespace SignatureLibAsync
         /// </summary>
         /// <param name="task">Task for processing</param>
         /// <returns>Task</returns>
-        public Task AddTaskAsync(ITask task)
+        public void AddTaskAsync(ITask task)
         {
-            var result = Task.Run(() => AddTaskInner(task));
-            return result;
+            Task.Run(() => AddTaskInner(task));
         }
 
         /// <summary>
@@ -86,7 +88,7 @@ namespace SignatureLibAsync
         {
             try
             {
-                while (_runTaskQueue || _countTasksRunning > 0)
+                while (_flagRunTasks || _countTasksRunning > 0)
                 {
                     var newTask = await GetTask();
                     if (newTask != null)
@@ -108,7 +110,7 @@ namespace SignatureLibAsync
         /// </summary>
         public void StopLoop()
         {
-            _runTaskQueue = false;
+            _flagRunTasks = false;
         }
 
         #endregion
@@ -122,7 +124,6 @@ namespace SignatureLibAsync
         /// <returns></returns>
         private void AddTaskInner(ITask task)
         {
-            Interlocked.Increment(ref _countTasks);
             _tasks.Enqueue(task);
         }
 

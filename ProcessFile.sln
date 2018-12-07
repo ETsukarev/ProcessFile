@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessFile", "ConsoleCalcS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignatureLibAsync", "SignatureLibAsync\SignatureLibAsync.csproj", "{927D1C30-948B-4B70-B630-9D1DC3F60CBC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignatureWorkerAbstracts", "SignatureWorkerAbstracts\SignatureWorkerAbstracts.csproj", "{CCB795CE-86A1-413E-ACCB-F7E1EB2AC12E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignatureWorkerCommonTypes", "SignatureWorkerAbstracts\SignatureWorkerCommonTypes.csproj", "{CCB795CE-86A1-413E-ACCB-F7E1EB2AC12E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -21,8 +21,8 @@ namespace ConsoleCalcSignature
         {
             try
             {
-                if (2 != args.Length)
-                    throw new ApplicationException("You must set input file and size of block in bytes !");
+                if (args.Length < 3)
+                    throw new ApplicationException("You must set input file, size of block in bytes and version processor (v1 or v2)");
 
                 Console.WriteLine();
                 Console.WriteLine("Input parameters:");
@@ -32,7 +32,7 @@ namespace ConsoleCalcSignature
 
                 using (var signer = new Signer())
                 {
-                    signer.Init(args[0], args[1]);
+                    signer.Init(args[0], args[1], args[2]);
                     await signer.RunSign();
 
                     //do
@@ -54,10 +54,14 @@ namespace ConsoleCalcSignature
     /// </summary>
     internal class Signer : IDisposable
     {
+        private const string Version1 = "v1";
+
+        private const string Version2 = "v2";
+
         /// <summary>
-        /// Instance of Signworker
+        /// Processor of signatures builded on Thread and classes .Net Framework 3.5
         /// </summary>
-        private ISignWorker SignatureWorker { get; }
+        private ISignWorker SignatureWorker { get; set; }
 
         /// <summary>
         /// Event signal to stop processing
@@ -65,30 +69,36 @@ namespace ConsoleCalcSignature
         private readonly ManualResetEvent _eventStop = new ManualResetEvent(false);
 
         ///// <summary>
-        ///// Обработчик сигнатур построенный на async/await
+        ///// Processor of signatures builded on Task, async/await
         ///// </summary>
-        private SignWorkerAsync signWorkerAsync;// = new SignWorkerAsync();
+        private ISignWorkerAsync _signWorkerAsync;
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        internal Signer()
-        {
-            //SignatureWorker = new SignWorker();
-            signWorkerAsync = new SignWorkerAsync();
-        }
+        private string _version;
 
         /// <summary>
         /// Initialization of processing
         /// </summary>
         /// <param name="inputFile">Input file to process</param>
         /// <param name="blockSize">Size of block to process</param>
-        internal void Init(string inputFile, string blockSize)
+        /// <param name="version">Version of processing worker. "v1" - old classes for multithreading(.Net 3.5); "v2"- Task, async/await</param>
+        internal void Init(string inputFile, string blockSize, string version = Version2)
         {
-            //SignatureWorker.Init(inputFile, blockSize);
-            //SignatureWorker.FileProcessCompleted += CompletedProcessed;
-            signWorkerAsync.Init(inputFile, blockSize);
-            signWorkerAsync.FileProcessCompleted += CompletedProcessed;
+            if (version.Equals(Version2))
+            {
+                _signWorkerAsync = new SignWorkerAsync();
+                _signWorkerAsync.Init(inputFile, blockSize);
+                _signWorkerAsync.FileProcessCompleted += CompletedProcessed;
+            }
+            else if (version.Equals(Version1))
+            {
+                SignatureWorker = new SignWorker();
+                SignatureWorker.Init(inputFile, blockSize);
+                SignatureWorker.FileProcessCompleted += CompletedProcessed;
+            }
+            else
+                throw new NotSupportedException("Version of processor not support! You can choose between v1 and v2 versions.");
+
+            _version = version;
         }
 
         /// <summary>
@@ -96,8 +106,10 @@ namespace ConsoleCalcSignature
         /// </summary>
         internal async Task RunSign()
         {
-            //SignatureWorker.Run();
-            await signWorkerAsync.Run();
+            if (_version.Equals(Version2))
+                await _signWorkerAsync.Run();
+            else if (_version.Equals(Version1)) 
+                    await Task.Run(() => SignatureWorker.Run());
         }
 
         /// <summary>
@@ -139,8 +151,8 @@ namespace ConsoleCalcSignature
             if (SignatureWorker is IDisposable)
                 ((IDisposable)SignatureWorker).Dispose();
 
-            if (signWorkerAsync is IDisposable)
-                ((IDisposable)signWorkerAsync).Dispose();
+            if (_signWorkerAsync is IDisposable)
+                ((IDisposable)_signWorkerAsync).Dispose();
         }
     }
 }

@@ -45,9 +45,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\SignatureWorkerAbstracts\SignatureWorkerAbstracts.csproj">
+    <ProjectReference Include="..\SignatureWorkerAbstracts\SignatureWorkerCommonTypes.csproj">
       <Project>{ccb795ce-86a1-413e-accb-f7e1eb2ac12e}</Project>
-      <Name>SignatureWorkerAbstracts</Name>
+      <Name>SignatureWorkerCommonTypes</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

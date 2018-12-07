@@ -62,7 +62,7 @@ namespace SignatureLibAsync
                 _taskQueue.AddTask(TaskWriteObjectToFile.GetInstance(StringSource.GetInstance(string.Empty)));
 
                 while (!_fileSource.IsReadComplete())
-                    await _taskQueue.AddTaskAsync(TaskCalcHashSha256.GetInstance());
+                    _taskQueue.AddTaskAsync(TaskCalcHashSha256.GetInstance());
             }
             catch (Exception ex)
             {
@@ -73,7 +73,7 @@ namespace SignatureLibAsync
                 _taskQueue.StopLoop();
                 try
                 {
-                    taskResult?.Wait();
+                    await taskResult;
                 }
                 catch (Exception ex)
                 {

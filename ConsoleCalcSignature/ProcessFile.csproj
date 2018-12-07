@@ -73,9 +73,9 @@
       <Project>{cab8514e-e179-4e14-8fb7-968674d6e93c}</Project>
       <Name>SignatureLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SignatureWorkerAbstracts\SignatureWorkerAbstracts.csproj">
+    <ProjectReference Include="..\SignatureWorkerAbstracts\SignatureWorkerCommonTypes.csproj">
       <Project>{CCB795CE-86A1-413E-ACCB-F7E1EB2AC12E}</Project>
-      <Name>SignatureWorkerAbstracts</Name>
+      <Name>SignatureWorkerCommonTypes</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
