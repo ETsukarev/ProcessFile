@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using SignatureLib.Interfaces;
-using SignatureWorkerAbstracts;
-using SignatureLib;
-using SignatureLib.Sources;
+using SignatureWorkerCommonTypes;
+using SignatureWorkerCommonTypes.Interfaces;
+using SignatureWorkerCommonTypes.Sources;
+using SignatureWorkerCommonTypes.Tasks;
 
 namespace SignatureLibAsync
 {
@@ -28,6 +28,12 @@ namespace SignatureLibAsync
 
         #region Public_methods
 
+        /// <summary>
+        /// Initialization of instance this class
+        /// </summary>
+        /// <param name="inputFile">Input file</param>
+        /// <param name="sizeBlock">Size of block for processing</param>
+        /// <param name="fileResult">Name of file with result</param>
         public void Init(string inputFile, string sizeBlock, string fileResult = "SignatureBlocks.txt")
         {
             _sizeBlock = int.TryParse(sizeBlock, out var result) ? result : DefaultSizeBlock;
@@ -41,6 +47,10 @@ namespace SignatureLibAsync
             _taskQueue = new TaskQueueAsync();
         }
 
+        /// <summary>
+        /// Loop for generate and add tasks for processing
+        /// </summary>
+        /// <returns>Task</returns>
         public async Task Run()
         {
             Task taskResult = null;
@@ -74,13 +84,22 @@ namespace SignatureLibAsync
             }
         }
 
+        /// <summary>
+        /// Event for signalling complete processing
+        /// </summary>
         public event EventHandler<SignWorkerCompletedAbstractArgs> FileProcessCompleted;
 
+        /// <summary>
+        /// Exception in time of working
+        /// </summary>
         public Exception Error { get; private set; }
 
+        /// <summary>
+        /// Resource disposing
+        /// </summary>
         public void Dispose()
         {
-            ((IDisposable) TaskCalcHashSha256.Source).Dispose();
+            (TaskCalcHashSha256.Source as IDisposable).Dispose();
         }
 
         #endregion

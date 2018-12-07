@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SignatureLib.Interfaces
+namespace SignatureWorkerCommonTypes.Interfaces
 {
     /// <summary>
     /// Interface for adding tasks, processing them, getting status processing

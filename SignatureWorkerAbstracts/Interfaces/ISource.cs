@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SignatureLib.Interfaces
+namespace SignatureWorkerCommonTypes.Interfaces
 {
     /// <summary>
     /// Interface of data source

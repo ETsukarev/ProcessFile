@@ -2,9 +2,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using SignatureLib;
-using SignatureLib.Interfaces;
 using SignatureLibAsync;
-using SignatureWorkerAbstracts;
+using SignatureWorkerCommonTypes;
+using SignatureWorkerCommonTypes.Interfaces;
 
 namespace ConsoleCalcSignature
 {

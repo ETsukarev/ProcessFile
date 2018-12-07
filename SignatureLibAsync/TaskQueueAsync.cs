@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using SignatureLib.Interfaces;
+using SignatureWorkerCommonTypes.Interfaces;
 
 namespace SignatureLibAsync
 {

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using SignatureWorkerAbstracts;
+using SignatureWorkerCommonTypes;
 
-namespace SignatureLib.Interfaces
+namespace SignatureLibAsync
 {
     /// <summary>
     /// Interface to process input file

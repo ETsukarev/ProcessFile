@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Security.Cryptography;
 using System.Threading;
-using SignatureLib.Interfaces;
-using SignatureLib.Sources;
+using SignatureWorkerCommonTypes.Interfaces;
+using SignatureWorkerCommonTypes.Sources;
 
-namespace SignatureLib
+namespace SignatureWorkerCommonTypes.Tasks
 {
     /// <summary>
     /// Task for calculate SHA256 on block of file

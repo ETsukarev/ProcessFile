@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
-using SignatureLib.Interfaces;
+using SignatureWorkerCommonTypes.Interfaces;
 
 namespace SignatureLib
 {

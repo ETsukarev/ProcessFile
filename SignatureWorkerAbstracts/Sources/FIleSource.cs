@@ -1,9 +1,8 @@
-﻿using System;
+﻿using SignatureWorkerCommonTypes.Interfaces;
+using System;
 using System.IO;
-using System.Net;
-using SignatureLib.Interfaces;
 
-namespace SignatureLib
+namespace SignatureWorkerCommonTypes.Sources
 {
     /// <summary>
     /// Source is file

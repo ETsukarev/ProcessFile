@@ -1,10 +1,8 @@
 ﻿using System;
-using System.IO;
-using System.Net;
 using System.Text;
-using SignatureLib.Interfaces;
+using SignatureWorkerCommonTypes.Interfaces;
 
-namespace SignatureLib
+namespace SignatureWorkerCommonTypes.Tasks
 {
     /// <summary>
     /// Task for write result to file

@@ -1,7 +1,7 @@
-﻿using System.Text;
-using SignatureLib.Interfaces;
+﻿using SignatureWorkerCommonTypes.Interfaces;
+using System.Text;
 
-namespace SignatureLib.Sources
+namespace SignatureWorkerCommonTypes.Sources
 {
     /// <summary>
     /// Source is string

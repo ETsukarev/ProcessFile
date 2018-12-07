@@ -1,7 +1,6 @@
 ﻿using System;
-using SignatureWorkerAbstracts;
 
-namespace SignatureLib.Interfaces
+namespace SignatureWorkerCommonTypes.Interfaces
 {
     /// <summary>
     /// Interface to process input file
