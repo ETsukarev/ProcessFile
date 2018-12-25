@@ -15,5 +15,7 @@ ProcessFile "d:\Temp\file with data.txt" 10000 v2
 File with results named 'SignatureBlocks.txt' will be in the directory of ProcessFile.exe
 
 Warning !
-v1 - It used classes for multithreading only which exists in .Net Framework 3.5. 
+
+v1 - It used classes for multithreading only which exists in .Net Framework 3.5;
+
 v2 - It used Task? async/await
