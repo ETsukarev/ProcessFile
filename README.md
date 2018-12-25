@@ -18,4 +18,4 @@ Warning !
 
 v1 - It used classes for multithreading only which exists in .Net Framework 3.5;
 
-v2 - It used Task? async/await
+v2 - It used Task, async/await
